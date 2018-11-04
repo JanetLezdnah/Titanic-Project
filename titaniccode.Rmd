@@ -1,0 +1,85 @@
+---
+title: "Titanic Clean Up"
+author: "J. Handzel"
+date: "Nov 2, 2018"
+output: html_document
+---
+##options(repos="https://cran.rstudio.com" )
+##{r setup, include=FALSE}
+##knitr::opts_chunk$set(echo = TRUE)
+
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+install.packages("tidyverse")
+
+mean(titanic_clean$age, na.rm=TRUE)
+
+
+
+```{r embark}
+library(tidyverse)
+
+#save(titanic3.cvs, file="titanic3.RData")
+
+
+load(file="titanic3.RData")
+
+titanic_clean <- titanic3
+
+#write.csv(titanic3, file = "titanic3.csv")
+
+#Put S in embarked for all NA
+table(titanic_clean$embarked)
+
+titanic_clean$embarked[is.na(titanic_clean$embarked)] <- 'S'
+
+#titanic_clean[titanic_clean$embarked=='',11]
+
+table(titanic_clean$embarked)
+              
+#Put avg in age NA
+titanic_clean$age[is.na(titanic_clean$age)] <- round(mean(titanic_clean$age, na.rm = TRUE))
+
+ 
+titanic_clean[16, ]
+
+titanic_clean$boat[is.na(titanic_clean$boat)] <- 'NA'
+#Clean Boat
+titanic_clean[3, ]
+
+
+  
+
+  
+ titanic_clean$has_cabin_number <- titanic_clean$cabin
+ 
+#Load with 1
+titanic_clean$has_cabin_number <- "1"
+#change NA to 0 
+titanic_clean$has_cabin_number[is.na(titanic_clean$cabin)] <- "0"
+#turn vector into a factor
+titanic_clean$has_cabin_number <- factor(titanic_clean$has_cabin_number)
+ 
+titanic_clean[24:25, ]
+
+write.csv(titanic_clean, file = "titanic_clean.csv")
+
+
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+```
+
+
